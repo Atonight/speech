@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -30,6 +31,8 @@ def parse_args() -> argparse.Namespace:
         default=str(PROJECT_ROOT / "outputs" / "audio" / "segments_v35flash_clonea1"),
         help="Output directory. Existing wav files with the same names are overwritten.",
     )
+    parser.add_argument("--only-id", default=None, help="Generate only one segment id, e.g. 001.")
+    parser.add_argument("--strip-breaks", action="store_true", help="Remove SSML break tags before synthesis.")
     return parser.parse_args()
 
 
@@ -79,6 +82,10 @@ def int_or_none(value: str | None) -> int | None:
     return int(float(value))
 
 
+def strip_break_tags(text: str) -> str:
+    return re.sub(r"<break\b[^>]*/>", "", text, flags=re.IGNORECASE)
+
+
 def main() -> None:
     args = parse_args()
     preset = load_preset(args.preset)
@@ -88,6 +95,11 @@ def main() -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
 
     manifest = []
+    if args.only_id:
+        materials = [item for item in materials if item[0] == args.only_id]
+        if not materials:
+            raise SystemExit(f"No segment found for id {args.only_id}")
+
     for index, (segment_id, xml_path, instruction_path) in enumerate(materials, start=1):
         row = csv_rows.get(segment_id)
         if row is None:
@@ -99,12 +111,15 @@ def main() -> None:
             voice = preset["voice"]
 
         text = xml_path.read_text(encoding="utf-8").strip()
+        if args.strip_breaks:
+            text = strip_break_tags(text)
         if instruction_path is not None:
             instruction = instruction_path.read_text(encoding="utf-8").strip()
         else:
             instruction = (row.get("instruction") or preset.get("instruction") or "").strip()
 
-        output_path = output_dir / f"{segment_id}_{segment_id}.wav"
+        output_name = f"{segment_id}.wav" if args.only_id else f"{segment_id}_{segment_id}.wav"
+        output_path = output_dir / output_name
         client = CosyVoiceClient(model=model)
         result = client.synthesize_to_file(
             text=text,
