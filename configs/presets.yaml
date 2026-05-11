@@ -1,6 +1,6 @@
 default:
-  model: cosyvoice-v2
-  voice: longjixin
+  model: cosyvoice-v3.5-flash
+  voice: cosyvoice-v3.5-flash-clonea1-01f83c04c4594726a7ba34e1b24fad5c
   format: WAV_22050HZ_MONO_16BIT
   volume: 50
   speech_rate: 1.0
