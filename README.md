@@ -92,3 +92,17 @@ python scripts/generate_one.py --output outputs/audio/my_test.wav
 ## 生成文件策略
 
 所有音频文件写入 `outputs/audio/`，该目录已在 `.gitignore` 中忽略，不会提交到 Git。
+
+## 声音设计
+
+使用文本描述创建定制音色，并保存预览音频：
+
+```bash
+python scripts/design_voices.py --target-model cosyvoice-v3-flash --count 5
+```
+
+输出目录：
+
+```text
+outputs/audio/voice_design/
+```
