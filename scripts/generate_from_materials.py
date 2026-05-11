@@ -113,10 +113,12 @@ def main() -> None:
         if row is None:
             raise SystemExit(f"No CSV row found for segment id {segment_id} ({xml_path.name})")
 
-        model = (row.get("model") or "").strip() or preset.get("model", "cosyvoice-v3.5-flash")
         voice = (row.get("voice") or "").strip()
         if voice in VOICE_PLACEHOLDERS:
             voice = preset["voice"]
+            model = preset.get("model", "cosyvoice-v3.5-flash")
+        else:
+            model = (row.get("model") or "").strip() or preset.get("model", "cosyvoice-v3.5-flash")
 
         text = xml_path.read_text(encoding="utf-8").strip()
         if args.strip_breaks:

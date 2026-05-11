@@ -1,6 +1,6 @@
 default:
-  model: cosyvoice-v3.5-flash
-  voice: cosyvoice-v3.5-flash-clonea1-01f83c04c4594726a7ba34e1b24fad5c
+  model: cosyvoice-v3.5-plus
+  voice: cosyvoice-v3.5-plus-clonep1-190c72452fa5493296165fd55bfd74e4
   format: WAV_22050HZ_MONO_16BIT
   volume: 50
   speech_rate: 1.0
