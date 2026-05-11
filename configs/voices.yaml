@@ -15,3 +15,12 @@ voices:
   longanyang:
     label: 龙安洋
     description: cosyvoice-v3-flash 音色，支持 SSML 与 Instruct 情感控制
+cloned_voices:
+  clonea1_v35_flash:
+    model: cosyvoice-v3.5-flash
+    voice: cosyvoice-v3.5-flash-clonea1-01f83c04c4594726a7ba34e1b24fad5c
+    source: samples/clone/clone_source.wav
+  clonep1_v35_plus:
+    model: cosyvoice-v3.5-plus
+    voice: cosyvoice-v3.5-plus-clonep1-190c72452fa5493296165fd55bfd74e4
+    source: samples/clone/clone_source.wav
