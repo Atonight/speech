@@ -39,6 +39,8 @@ class CosyVoiceClient:
         volume: int | None = None,
         speech_rate: float | None = None,
         pitch_rate: float | None = None,
+        instruction: str | None = None,
+        language_hints: list[str] | None = None,
         timeout_millis: int | None = None,
     ) -> SynthesisResult:
         if not text.strip():
@@ -63,6 +65,10 @@ class CosyVoiceClient:
             request_params["speech_rate"] = speech_rate
         if pitch_rate is not None:
             request_params["pitch_rate"] = pitch_rate
+        if instruction is not None:
+            request_params["instruction"] = instruction
+        if language_hints is not None:
+            request_params["language_hints"] = language_hints
 
         # DashScope docs require a fresh SpeechSynthesizer for each call.
         synthesizer = SpeechSynthesizer(**request_params)
@@ -94,6 +100,8 @@ class CosyVoiceClient:
         volume: int | None = None,
         speech_rate: float | None = None,
         pitch_rate: float | None = None,
+        instruction: str | None = None,
+        language_hints: list[str] | None = None,
         timeout_millis: int | None = None,
     ) -> list[SynthesisResult]:
         results: list[SynthesisResult] = []
@@ -107,6 +115,8 @@ class CosyVoiceClient:
                     volume=volume,
                     speech_rate=speech_rate,
                     pitch_rate=pitch_rate,
+                    instruction=instruction,
+                    language_hints=language_hints,
                     timeout_millis=timeout_millis,
                 )
             )
@@ -123,6 +133,8 @@ class CosyVoiceClient:
         volume: int | None = None,
         speech_rate: float | None = None,
         pitch_rate: float | None = None,
+        instruction: str | None = None,
+        language_hints: list[str] | None = None,
         timeout_millis: int | None = None,
     ) -> list[SynthesisResult]:
         output_root = Path(output_dir)
@@ -137,6 +149,8 @@ class CosyVoiceClient:
                     volume=volume,
                     speech_rate=speech_rate,
                     pitch_rate=pitch_rate,
+                    instruction=instruction,
+                    language_hints=language_hints,
                     timeout_millis=timeout_millis,
                 )
             )

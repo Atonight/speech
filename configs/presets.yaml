@@ -12,3 +12,13 @@ short_video:
   volume: 55
   speech_rate: 1.05
   pitch_rate: 1.0
+emotion_rhythm_test:
+  model: cosyvoice-v3-flash
+  voice: longanyang
+  format: WAV_22050HZ_MONO_16BIT
+  volume: 55
+  speech_rate: 1.0
+  pitch_rate: 1.0
+  language_hints:
+    - zh
+  instruction: 你说话的情感是happy。

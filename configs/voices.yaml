@@ -12,3 +12,6 @@ voices:
   longyingtao:
     label: 龙樱桃
     description: 中文短视频配音音色
+  longanyang:
+    label: 龙安洋
+    description: cosyvoice-v3-flash 音色，支持 SSML 与 Instruct 情感控制

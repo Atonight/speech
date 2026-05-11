@@ -64,6 +64,14 @@ python scripts/generate_one.py
 python scripts/generate_one.py --voice longyingjing --text "这是一段短视频配音测试。"
 ```
 
+节奏和情绪控制测试：
+
+```bash
+python scripts/generate_one.py --preset emotion_rhythm_test --text "<speak rate=\"1.15\">今天我们用一分钟，<break time=\"300ms\"/>讲清楚这个变化为什么重要。</speak>" --output outputs/audio/longanyang_emotion_rhythm_test.wav
+```
+
+说明：`instruction` 情绪提示仅支持 `cosyvoice-v3`、`cosyvoice-v3-plus` 等官方标记支持 Instruct 的模型和音色；`cosyvoice-v2` 的常用系统音色可用 SSML 控制节奏，但不支持 Instruct 情绪提示。
+
 指定输出文件：
 
 ```bash

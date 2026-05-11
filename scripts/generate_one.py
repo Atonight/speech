@@ -21,6 +21,8 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Generate one CosyVoice audio file.")
     parser.add_argument("--text", default=DEFAULT_TEXT, help="Text or SSML to synthesize.")
     parser.add_argument("--voice", default=None, help="CosyVoice voice, e.g. longjixin.")
+    parser.add_argument("--model", default=None, help="Override preset model.")
+    parser.add_argument("--instruction", default=None, help="Voice prompt instruction for supported models.")
     parser.add_argument("--preset", default="default", help="Preset name in configs/presets.yaml.")
     parser.add_argument("--output", default=None, help="Output WAV path.")
     parser.add_argument("--timeout-millis", type=int, default=None)
@@ -44,7 +46,10 @@ def main() -> None:
     voice = args.voice or preset.get("voice", "longjixin")
     output = Path(args.output) if args.output else PROJECT_ROOT / "outputs" / "audio" / f"{voice}_test.wav"
 
-    client = CosyVoiceClient(model=preset.get("model", "cosyvoice-v2"))
+    instruction = args.instruction if args.instruction is not None else preset.get("instruction")
+    language_hints = preset.get("language_hints")
+
+    client = CosyVoiceClient(model=args.model or preset.get("model", "cosyvoice-v2"))
     try:
         result = client.synthesize_to_file(
             text=args.text,
@@ -54,6 +59,8 @@ def main() -> None:
             volume=preset.get("volume"),
             speech_rate=preset.get("speech_rate"),
             pitch_rate=preset.get("pitch_rate"),
+            instruction=instruction,
+            language_hints=language_hints,
             timeout_millis=args.timeout_millis,
         )
     except RuntimeError as exc:
