@@ -1,0 +1,14 @@
+default:
+  model: cosyvoice-v2
+  voice: longjixin
+  format: WAV_22050HZ_MONO_16BIT
+  volume: 50
+  speech_rate: 1.0
+  pitch_rate: 1.0
+short_video:
+  model: cosyvoice-v2
+  voice: longjixin
+  format: WAV_22050HZ_MONO_16BIT
+  volume: 55
+  speech_rate: 1.05
+  pitch_rate: 1.0

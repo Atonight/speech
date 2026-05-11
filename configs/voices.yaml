@@ -1,0 +1,14 @@
+model: cosyvoice-v2
+voices:
+  longbaizhi:
+    label: 龙白芷
+    description: 中文短视频配音音色
+  longjixin:
+    label: 龙季新
+    description: 默认测试音色
+  longyingjing:
+    label: 龙樱静
+    description: 中文短视频配音音色
+  longyingtao:
+    label: 龙樱桃
+    description: 中文短视频配音音色
