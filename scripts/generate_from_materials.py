@@ -46,8 +46,16 @@ def load_preset(name: str) -> dict[str, Any]:
 
 
 def load_csv_rows(path: Path) -> dict[str, dict[str, str]]:
-    with path.open("r", encoding="utf-8-sig", newline="") as file:
-        rows = list(csv.DictReader(file))
+    rows: list[dict[str, str]] | None = None
+    for encoding in ("utf-8-sig", "gb18030", "utf-16"):
+        try:
+            with path.open("r", encoding=encoding, newline="") as file:
+                rows = list(csv.DictReader(file))
+            break
+        except UnicodeDecodeError:
+            continue
+    if rows is None:
+        raise SystemExit(f"Could not decode CSV file: {path}")
     result: dict[str, dict[str, str]] = {}
     for row in rows:
         segment_id = (row.get("id") or "").strip()
